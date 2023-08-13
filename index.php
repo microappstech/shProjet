@@ -77,20 +77,25 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <form action="ImportFile.php" enctype="multipart/form-data" method="post">
+            <form action="ImportFileOt.php" enctype="multipart/form-data" method="post">
                 <li class="nav-item active">
-                    <input type="file" id="InputExcel" name="InputExcel" value="" required />
+                    <input  type="file" id="InputExcel" name="InputExcel" value="" style="display:none"/>
                     <a  id="ImportBtn" name="ImportBtn" style="background-color: inherit; border: inherit;" class="nav-link" href="">
-                        
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Import OT</span>
-                </a>
-                <input type="submit" name="ImportBtnPhp" id="ImportBtnPhp" value="ImportBtnPhp" style="display: block;">
-                    </li>
-                    <?php
-                    echo "test";
-                    
-                            ?>
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Import OT</span>
+                    </a>
+                    <input type="submit" name="ImportBtnPhpOt" id="ImportBtnPhpOt" value="ImportBtnPhpOt" style="display: none;">
+                </li>
+            </form>
+            <form action="ImportFileDi.php" enctype="multipart/form-data" method="post">
+                <li class="nav-item active">
+                    <input  type="file" id="InputExcelDi" name="InputExcelDi" value="" style="display:none"/>
+                    <a  id="ImportBtnDi" name="ImportBtnDi" style="background-color: inherit; border: inherit;" class="nav-link" href="">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Import Di</span>
+                    </a>
+                    <input type="submit" name="ImportBtnPhpDi" id="ImportBtnPhpDi" value="ImportBtnPhpDi" style="display: none;">
+                </li>
             </form>
             
 
@@ -619,10 +624,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card Body -->
+                                <!-- Card Body Of DI -->
                                 <div class="card-body row">
                                     <div class="chart-pie pt-4 pb-2 col-md-7">
-                                        <canvas id="myPieChart1"></canvas>
+                                        <canvas class="DI" id="myPieChart1"></canvas>
                                     </div>
                                     <div class="mt-5 text-left small col-md-5">
                                         <h5 class="flot-auto">Status DI</h5>
@@ -956,22 +961,55 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
-    <!-- <script>
+    <script>
+        // Import Ot
         const fileInput = document.getElementById('InputExcel');
         const uploadButton = document.getElementById('ImportBtn');
-        let ImportBtnPhp =document.getElementById("ImportBtnPhp");
-console.log(uploadButton)
-        uploadButton.addEventListener('click', () => {
+        let ImportBtnPhpOt =document.getElementById("ImportBtnPhpOt");
+        uploadButton.addEventListener('click', (e) => {
+            e.preventDefault();
             fileInput.click();
         });
-
-        fileInput.addEventListener('change', () => {
+        fileInput.addEventListener('change', (e) => {
+           e.preventDefault();
+           
             const fileName = fileInput.files[0].name;
-            ImportBtnPhp.click();
-            console.log(fileName)
+            if(!fileName.toLowerCase().includes("ot")){
+                window.alert("The file is not OT !!!!!!!");
+                console.log("the form not submited")
+                return;
+            }else{
+                console.log("the form is submited : "+fileName)
+                ImportBtnPhpOt.click();
+            }
             
         });
-    </script> -->
+        // ------------------------------
+        // Import DI
+        // Import Ot
+        const fileInputDi = document.getElementById('InputExcelDi');
+        const uploadButtonDi = document.getElementById('ImportBtnDi');
+        let ImportBtnPhpDi =document.getElementById("ImportBtnPhpDi");
+        uploadButtonDi.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileInputDi.click();
+        });
+        fileInputDi.addEventListener('change', (e) => {
+           e.preventDefault();
+           
+            const fileName = fileInputDi.files[0].name;
+            console.log(fileName)
+            if(!fileName.toLowerCase().includes("di")){
+                window.alert("The file is not DI !!!!!!!!!!");
+                console.log("The form not submited")
+                return;
+            }else{
+                console.log("the form is submited : "+fileName)
+                ImportBtnPhpDi.click();
+            }
+            
+        });
+</script>
 
 </body>
 

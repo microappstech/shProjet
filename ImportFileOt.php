@@ -5,7 +5,7 @@
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Replace;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
         
-        if(isset($_POST["ImportBtnPhp"])) {
+        if(isset($_POST["ImportBtnPhpOt"])) {
             // Allowed mime types 
             $excelMimes = array('text/xls', 'text/xlsx', 'application/excel', 'application/vnd.msexcel', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); 
             $uploadDir = 'uploads/';   

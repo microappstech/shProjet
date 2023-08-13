@@ -78,7 +78,7 @@
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                     <!-- Sidebar - Brand -->
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                         <div class="sidebar-brand-icon rotate-n-15">
                            
                         </div>
@@ -90,7 +90,7 @@
         
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
@@ -244,7 +244,7 @@
                         </li>
                      
                         <li class="nav-item dropdown mx-1">
-                            <a class="nav-link " href="execution.html" >
+                            <a class="nav-link " href="execution.php" >
                                 
                                 <i class="fas ">Execution</i>
                                 <!-- Counter - Alerts -->
@@ -492,7 +492,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                <a class ="text-xs font-weight-bold text-primary text-uppercase mb-1" href="execution.html">Execution</a>
+                                                <a class ="text-xs font-weight-bold text-primary text-uppercase mb-1" href="execution.php">Execution</a>
                                                   </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">70%</div>
                                         </div>
@@ -510,7 +510,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                <a class ="text-xs font-weight-bold text-primary text-uppercase mb-1" href="execution.html">Execution</a>
+                                                <a class ="text-xs font-weight-bold text-primary text-uppercase mb-1" href="execution.php">Execution</a>
                                                   </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">70%</div>
                                         </div>
