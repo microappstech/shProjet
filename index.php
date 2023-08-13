@@ -51,7 +51,27 @@
 </head>
 
 <body id="page-top">
-   
+   <?php
+   $sqlDiStatut = "select distinct DI_Status from di;";
+   $sqlDiValue = "SELECT
+   COUNT(*) AS Total,
+        (SUM(CASE WHEN DI_Status = 'Terminé' THEN 1 ELSE 0 END) / COUNT(*))*100  AS Termine,
+        (SUM(CASE WHEN DI_Status = 'Sur ordre de travail' THEN 1 ELSE 0 END)/count(*))*100 AS Sur_ordre_de_travail,
+        (SUM(CASE WHEN DI_Status = 'En attente d\'ordre de travail' THEN 1 ELSE 0 END)/count(*))*100 AS En_attente_ordre_de_travail,
+        (SUM(CASE WHEN DI_Status = 'Ouverte' THEN 1 ELSE 0 END)/count(*))*100 AS Ouverte,
+        (SUM(CASE WHEN DI_Status = 'Rejeté' THEN 1 ELSE 0 END)/count(*))*100 AS Rejete
+    FROM di;";
+   $resultDiStatus = $con->query($sqlDiStatut);
+   $statusArray = array();
+    while ($row = $resultDiStatus->fetch_assoc()) {
+        $statusArray[] = $row['DI_Status'];       
+    }
+    /////////////////////////// values of di
+    $resultDiValues = $con->query($sqlDiValue);
+    $row = $resultDiValues->fetch_assoc();
+    $statusValueArray = "[".$row["Termine"].", ".$row["Sur_ordre_de_travail"].",".$row["En_attente_ordre_de_travail"].",".$row["Rejete"].",".$row["Ouverte"]."]";
+    echo json_encode($statusValueArray)
+   ?>
  
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -627,7 +647,7 @@
                                 <!-- Card Body Of DI -->
                                 <div class="card-body row">
                                     <div class="chart-pie pt-4 pb-2 col-md-7">
-                                        <canvas class="DI" id="myPieChart1"></canvas>
+                                        <canvas class="DI" id="DiChart"></canvas>
                                     </div>
                                     <div class="mt-5 text-left small col-md-5">
                                         <h5 class="flot-auto">Status DI</h5>
@@ -674,7 +694,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body row">
                                     <div class="chart-pie pt-4 pb-2 col-md-7">
-                                        <canvas id="myPieChart3"></canvas>
+                                        <canvas id="ChartOt"></canvas>
                                     </div>
                                     <div class="mt-5 text-left small col-md-5">
                                         <h6 class="flot-auto">Cause de non réalisa...</h6>
@@ -724,7 +744,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body row">
                                     <div class="chart-pie pt-4 pb-2 col-md-7">
-                                        <canvas id="myPieChart8"></canvas>
+                                        <canvas id="ChartTauxPreventif"></canvas>
                                     </div>
                                     <div class="mt-5 text-left small col-md-5">
                                         <h5 class="flot-auto">Status </h5>
@@ -763,7 +783,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body row">
                                     <div class="chart-pie pt-4 pb-2 col-md-7">
-                                        <canvas id="myPieChart9"></canvas>
+                                        <canvas id="ChartTauxImprevus"></canvas>
                                     </div>
                                     <div class="mt-5 text-left small col-md-5">
                                         <h6 class="flot-auto">Statut</h6>
@@ -1009,6 +1029,127 @@
             }
             
         });
+        // DiChart 
+        var ctx = document.getElementById("DiChart");
+        var myPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Terminé","Sur ordre de travail","En attente d\'ordre de travail","Rejeté","Ouverte"],
+            datasets: [{
+            data: <?php echo $statusValueArray ?> ,
+            borderWidth: 0,
+            backgroundColor: ['#36b9cc', 'blue', 'orange','purple','rgb(253, 64, 95)'],
+            hoverBackgroundColor: ['#36b9cc', 'blue', 'orange','purple','rgb(253, 64, 95)'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            
+            displayColors: false,
+            caretPadding: 10,
+            },
+            legend: {
+            display: false
+            },
+            cutoutPercentage: 70,
+        },
+        });
+
+        
+//----------------------- Chart Ot
+
+var ctx = document.getElementById("ChartOt");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ["Indesponsibilité...", "Indesponsibilité...", "Nécessite arrêtée", "Nécessite arrêtte...","Non mentionné"],
+    datasets: [{
+      data: [75,25],
+      backgroundColor: ['rgb(253, 64, 95)','blue'],
+      hoverBackgroundColor: ['pink','blue'],
+      borderWidth:0
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderWidth: 0,
+      //displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 70,
+  },
+});
+
+// Chart Taux du préventif
+
+var ctx = document.getElementById("ChartTauxPreventif");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ["Total OT (peventif)", "TOTal OT "],
+    datasets: [{
+      data: [60,40],
+      backgroundColor: ['#055255','#ADC2AD'],
+      hoverBackgroundColor: ['pink','blue'],
+      borderWidth:0
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderWidth: 0,
+      //displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 70,
+  },
+});
+
+
+////////////////////////////// Chart Taux d'imprévus
+
+var ctx = document.getElementById("ChartTauxImprevus");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ["OT non planifies", "TOTal OT "],
+    datasets: [{
+      data: [55,45],
+      backgroundColor: ['#8E3258','#CEA26B'],
+      hoverBackgroundColor: ['pink','blue'],
+      borderWidth:0
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderWidth: 0,
+      //displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 70,
+  },
+});
 </script>
 
 </body>
