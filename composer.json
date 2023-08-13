@@ -1,0 +1,16 @@
+{
+    "name": "hamza/startbootstrap-sb-admin-2-gh-pages",
+    "autoload": {
+        "psr-4": {
+            "Hamza\\StartbootstrapSbAdmin2GhPages\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hamza mouddakir"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
+}
